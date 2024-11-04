@@ -1,0 +1,37 @@
+EP-1 : Inception
+-----------------
+
+
+# CDN - Content Delivery Network
+
+# CORS - Cross Origin Resource Sharing
+
+
+<script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+- React.CreateElement(type, prop, children);
+const h1 = React.createElement('h1', {id:'heading'}, "Hello React");
+- ReactDOM.createRoot(container, options);
+const root = ReactDOM.createRoot(document.getElementById('root'));
+- root.render(reactNode);
+root.render(h1);
+
+
+- Why react ? 
+- Enables manipulating dom (costly opertion of browser) using Javascript
+
+- what is attribute?
+. Attributes help define the properties or behavior of the element and are specified in the opening tag of the element
+
+- React Element : Js Object and Not a tag 
+
+- root.render(reactElm);
+root.render takes a reactElm, converts it to a tag and put it into the DOM
+
+- Why JSX?
+Creating react element was a heavy job and involved a lot of code, so we use 'JSX', making creating elements easier
+
+--------------------------------------------------------------------------------------
+
+
