@@ -1,0 +1,25 @@
+{
+  "name": "foodie",
+  "version": "1.0.0",
+  "description": "food ordering app using react",
+  "main": "app.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yashgosavi-02/Foodie.git"
+  },
+  "keywords": [
+    "react"
+  ],
+  "author": "yashgosavi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yashgosavi-02/Foodie/issues"
+  },
+  "homepage": "https://github.com/yashgosavi-02/Foodie#readme",
+  "devDependencies": {
+    "parcel": "^2.12.0"
+  }
+}
