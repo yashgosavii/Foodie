@@ -110,4 +110,58 @@ For ~1.2.3, only versions >=1.2.3 and <1.3.0 are allowed
 
 EP-3 : Laying the foundation
 ------------------------------
+# creating our own npm scripts
+- "start" : "parcel index.html" ==> npm start / npm run start (development)
+- "build" : "parcel build index.html" ==> npm run build (production)
 
+# React Element : JS object, which is converted to a DOM element after rendering and everything inside main root is replaced.
+
+- React.createElement(type, prop, children)
+- ReactDOM.createRoot(document.getElementById('root'));
+- root.render(ReactElement);
+
+React element => JS Object[Render] => HTML element
+
+- Creating core react element is lengthy, so we prefer to use JSX.
+
+# JSX - JSX stands for JavaScript XML. JSX allows us to write HTML in React. JSX makes it easier to write and add HTML in React. (It is not HTML in Js)
+- It is not valid pure javascript. It is transpiled using 'babel' before it reaches the js engine to execute.
+- Attributes in jsx are in camel case
+- wrap the code in ( ) for multiple line writing
+
+
+JSX [Babel] => React Element => JS Object[Render] => HTML element
+
+- we can render multiple types if we wrap whole code inside '<> __ </>'
+
+# React Component
+Components are independent and reusable bits of code. They serve the same purpose as JavaScript functions, and return HTML.
+- Class Based Component (legacy)
+- Functional Component 
+
+# Class Based Component
+A class component must include the extends React.Component statement. The component also requires a render() method, this method returns HTML.
+
+class Car extends React.Component {
+  render() {
+    return <h2>Hi, I am a Car!</h2>;
+  }
+}
+
+# Functional Component 
+A Function component also returns HTML, and behaves much the same way as a Class component, but Function components can be written using much less code, are easier to understand
+
+const HeadingComponent = () => {
+    return <h1 id="heading"> Namaste React!</h1>
+}
+
+const HeadingComponent = () => (
+    <h1 id="heading"> Namaste React!</h1>
+)
+
+- we can render the react component using <Component1/> or Component1() or <Component1> </Component1>
+- we can render one component into other by putting a component to put using <Component1/> [Component Composition]
+
+- We can put javascript in JSX using { JS code }
+- It can also handle cross site scripting attack
+ 
