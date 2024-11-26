@@ -165,3 +165,113 @@ const HeadingComponent = () => (
 - We can put javascript in JSX using { JS code }
 - It can also handle cross site scripting attack
  
+--------------------------------------------------------------------------------------
+
+EP-4 : Talk is cheap, show me the code 
+--------------------------------------
+
+## Foodie : Food Ordering App
+- Plan and Prepare your UI mock 
+
+# Low Level Planning 
+- Header
+  - Logo
+  - Nav Items [Home, About us, Cart]
+- Body 
+  - Search
+  - Restaurant container
+    - Restaurant card
+      - Image
+      - Name of Restaurant
+      - Star Rating
+      - Cuisine
+      - Delivery time
+- Footer
+  - Copyright
+  - Address
+  - Links
+  - Contact
+
+# Making Cards Dynamic (Getting Data from an API)
+- We use Props 
+
+# Props (Properties) : We can pass it to components. We use this to pass data to components.
+- [Props to components are like Arguments to function]
+
+- <ComponentName propName="value" />
+- USAGE : {prop.propName}
+
+- props passed to component are wrapped as a object and utilized as object.propName 
+
+- Destructuring the object 
+(prop) --> ({resName, cuisine, rating deliveryTime, price})
+
+{prop.resName} --> {resName}
+
+-- const {resName, cuisine, rating, deliveryTime, price} = prop;
+
+## Config-driven UI
+- The layout, styles, and other properties of UI elements are defined in a configuration file or database, which can be easily modified without requiring changes to the codebase.
+
+# API 
+- https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9351929&lng=77.62448069999999&page_type=DESKTOP_WEB_LISTING
+
+# How to get latitude and longitude from user
+
+import React, { useState } from "react";
+const GeolocationComponent = () => {
+  const [location, setLocation] = useState({ latitude: null, longitude: null });
+  const [error, setError] = useState(null);
+
+  const getLocation = () => {
+    if (!navigator.geolocation) {
+      setError("Geolocation is not supported by your browser");
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        setLocation({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+        });
+        setError(null); // Clear any previous error
+      },
+      (err) => {
+        setError(err.message);
+      }
+    );
+  };
+
+  return (
+    <div style={{ textAlign: "center" }}>
+      <h1>Geolocation Example</h1>
+      <button onClick={getLocation}>Get My Location</button>
+      {location.latitude && location.longitude ? (
+        <p>
+          Latitude: {location.latitude}, Longitude: {location.longitude}
+        </p>
+      ) : (
+        <p>Location not available</p>
+      )}
+      {error && <p style={{ color: "red" }}>Error: {error}</p>}
+    </div>
+  );
+};
+export default GeolocationComponent;
+
+# Looping over restaurants
+resList.map((data)=>{
+  return <RestaurantCard resData = {data} key={data.info.id}/>
+})
+
+# Key - It help React identify which items in a list have changed, are added, or are removed. We can use index as keys but avoid its usage.
+- Benefits of Using Keys:
+1> Improved Performance: React can avoid unnecessary re-renders by accurately identifying which elements need to be updated.
+2> Preserving State: When elements are reordered, keys ensure that the state associated with each element is preserved.
+3> Preventing Bugs: In certain scenarios, not using keys can lead to unexpected behavior or bugs in your application.
+
+## React's Reconciliation Algorithm:
+When React updates a component, it compares the new virtual DOM (representing the desired output) with the previous virtual DOM.
+This process is called reconciliation, and it determines the minimal changes needed to update the actual DOM.
+
