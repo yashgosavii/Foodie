@@ -275,3 +275,43 @@ resList.map((data)=>{
 When React updates a component, it compares the new virtual DOM (representing the desired output) with the previous virtual DOM.
 This process is called reconciliation, and it determines the minimal changes needed to update the actual DOM.
 
+--------------------------------------------------------------------------------------
+
+EP-5 : Let's Get Hooked 
+--------------------------
+
+## Folder Structure of Production based app
+
+- src [contains source code of app]
+  - components
+    - Header, Footer, Body, RestaurantCard
+  - App.js
+  - utils
+    - constants, mockData
+- index.css
+- index.html
+
+## Named and Default import and export
+
+- Default Import and Export 
+
+export default resList;
+import resList from "path/to/file";
+
+- Named Import and Export [used to export or import many things at once]
+
+export {RestaurantIMG_URL, Logo_URL};
+import {RestaurantIMG_URL, Logo_URL} from "path/to/file"
+
+$ NOTE : We can do both named and default export from a file
+
+export const component = () => {};
+export const component1 = () => {};
+const defaultComponent = () => {};
+export default defaultComponent;
+
+import {component, component1}, defaultComponent from "path/to/component";
+
+## React Hooks
+Hooks allow us to "hook" into React features such as state and lifecycle methods.
+Hooks allow function components to have access to state and other React features. Because of this, class components are generally no longer needed.
