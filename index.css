@@ -40,3 +40,15 @@
 .footer {
     border : 1px solid black;
 }
+.topRatedRestaurants{
+    margin : 10px;
+    cursor : pointer;
+}
+.vegOnly{
+    margin : 10px;
+    cursor : pointer;
+}
+.reset{
+    margin : 10px;
+    cursor : pointer;
+}

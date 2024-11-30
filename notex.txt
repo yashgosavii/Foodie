@@ -271,10 +271,6 @@ resList.map((data)=>{
 2> Preserving State: When elements are reordered, keys ensure that the state associated with each element is preserved.
 3> Preventing Bugs: In certain scenarios, not using keys can lead to unexpected behavior or bugs in your application.
 
-## React's Reconciliation Algorithm:
-When React updates a component, it compares the new virtual DOM (representing the desired output) with the previous virtual DOM.
-This process is called reconciliation, and it determines the minimal changes needed to update the actual DOM.
-
 --------------------------------------------------------------------------------------
 
 EP-5 : Let's Get Hooked 
@@ -312,6 +308,54 @@ export default defaultComponent;
 
 import {component, component1}, defaultComponent from "path/to/component";
 
-## React Hooks
+## React Hooks - (Normal JS utility function)
 Hooks allow us to "hook" into React features such as state and lifecycle methods.
 Hooks allow function components to have access to state and other React features. Because of this, class components are generally no longer needed.
+- useState() and useEffect()
+
+@features
+- Top Rated Restaurants Button 
+  [We will try to filter our listofRestaurants whose rating is >= 4.0]
+
+## Event Handlers
+- onClick Event : The onclick event occurs when the user clicks on an HTML element.
+Call a function when a button is clicked: <button onclick={filterFunc}>Click me</button>
+
+$ NOTE : Data and UI layer must be consistent [Major problem solved by Frameworks like React, Angular]; Updating DOM efficiently
+
+## JS variable 
+- let listOfRes = [];
+
+## State Variable : State variables are used to store data that can change over time, causing the component to re-render when the state is updated. 
+
+## useState Hook
+
+const [count, setCount] = useState(0);
+
+The useState Hook takes an initial value as its argument and returns an array with two elements:
+The first element is the current value of the state variable (e.g., count).
+The second element is a function to update the state variable (e.g., setCount).
+
+Updating the state:
+To change the value of the state variable, call the setter function returned by useState (e.g., setCount(count + 1)).
+Accessing the state:
+The value of the state variable can be used within your component's JSX (e.g., {count}).
+
+$ NOTE : Whenever a state variable updates react re-renders the component
+
+## React Fiber (Find DIFF and update the DOM)
+
+## React's Reconciliation Algorithm (React Fiber):
+When React updates a component, it compares the new virtual DOM (representing the desired output) with the previous virtual DOM.
+This process is called reconciliation, and it determines the minimal changes needed to update the actual DOM.
+
+e.g : resContainer [7 cards], we apply filter which fiters the cards to [3 cards]. How this happens fastly? 
+
+## Virtual DOM
+VirtualDOM (JS OBJECT) in React is a lightweight copy of the actual DOM(a virtual representation of the DOM) used to optimize the updates on web page. So for every object that exists in the original DOM, there is an object for that in React Virtual DOM. It is exactly the same, but it does not have the power to directly change the layout of the document. 
+
+Manipulating DOM is slow, but manipulating Virtual DOM is fast as nothing gets drawn on the screen. So each time there is a change in the state of our application, the virtual DOM gets updated first instead of the real DOM. 
+
+## How does virtual DOM actually make things faster?
+(DIFFING Algorithm)
+When anything new is added to the application, a virtual DOM is created and it is represented as a tree. Each element in the application is a node in this tree. So, whenever there is a change in the state of any element, a new Virtual DOM tree is created. This new Virtual DOM tree is then compared with the previous Virtual DOM tree and make a note of the changes. After this, it finds the best possible ways to make these changes to the real DOM. Now only the updated elements will get rendered on the page again.

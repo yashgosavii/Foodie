@@ -10,7 +10,7 @@ const resList = [
           "cuisines": [
               "South Indian"
           ],
-          "avgRating": 4.4,
+          "avgRating": 3.5,
           "veg": true,
           "parentId": "105882",
           "avgRatingString": "4.4",
@@ -103,7 +103,7 @@ const resList = [
           "cuisines": [
               "Snacks"
           ],
-          "avgRating": 4.5,
+          "avgRating": 3.4,
           "veg": true,
           "parentId": "295167",
           "avgRatingString": "4.5",
