@@ -1,38 +1,60 @@
 import RestaurantCard from "./RestaurantCard";
-import resList from "../utils/mockData";
-import { useState } from "react";
-
+import { useState, useEffect } from "react";
+import { API_URL } from "../utils/constants";
+import Shimmer from "./Shimmer";
 const Body = () => {
-  // State Variable [React Super Powerful Variable]
-  // we use hook 'useState'
+  // listOfRestaurants - original list of restaurants fetched from API
+  const [listOfRestaurants, setListOfRestaurant] = useState([]);
+  // filteredRestaurants - list of restaurants after applying filters
+  const [filteredRestaurants, setFilteredRestaurants] = useState([]);
+  // searchText - search text entered by user
+  const [searchText, setSearchText] = useState("");
 
-  const [originalList] = useState(resList);
+  // Body will render first and then useEffect will run
+  useEffect(() => {
+    fetchRestaurants();
+  }, []);
 
-  const [listOfRestaurants, setListOfRestaurant] = useState(resList);
+  // fetch restaurants from API
+  const fetchRestaurants = async () => {
+    const response = await fetch(API_URL);
+    const data = await response.json();
+    // set the original list of restaurants and filtered list of restaurants
+    setListOfRestaurant(data?.data?.cards[4].card?.card?.gridElements?.infoWithStyle?.restaurants);
+    setFilteredRestaurants(data?.data?.cards[4].card?.card?.gridElements?.infoWithStyle?.restaurants);
+  };
 
   // filter top rated restaurants
   const topRatedRestaurantsFilter = () => {
-    const filtredList = originalList.filter((res) => res.info.avgRating >= 4.0);
-    setListOfRestaurant(filtredList);
+    const filtredList = listOfRestaurants.filter((res) => res.info.avgRating >= 4.0);
+    setFilteredRestaurants(filtredList);
   };
 
   // filter veg only restaurants
   const vegOnly = () => {
-    const filtredList = originalList.filter((res) => res.info.veg === true);
-    setListOfRestaurant(filtredList);
+    const filtredList = listOfRestaurants.filter((res) => res.info.veg === true);
+    setFilteredRestaurants(filtredList);
   };
+
+  // filter based on search
+  const search = () => {
+    const filtredList = listOfRestaurants.filter((res) => res.info.name.toLowerCase().includes(searchText.toLowerCase()));
+    setFilteredRestaurants(filtredList);
+  }
 
   // reset filters to original list
   const resetFilters = () => {
-    setListOfRestaurant(originalList);
+    setFilteredRestaurants(listOfRestaurants);
+    setSearchText("");
   };
 
-  return (
+  // Shimmer Effect until data is fetched (conditional rendering) and then render the data
+  return listOfRestaurants.length === 0 ? <Shimmer/> : (
     <div className="body">
       {/* Search */}
       <div className="search">
-        <input type="text" placeholder="Search for food items" />
-        <button>Search</button>
+        <input type="text" className="search-input" value={searchText} placeholder="Search for restaurants" onChange={(e)=>{setSearchText(e.target.value)}}/>
+        <button className="search-button" onClick={search}>Search</button>
       </div>
 
       <div className="filter">
@@ -55,7 +77,7 @@ const Body = () => {
 
       {/* Restaurants */}
       <div className="res-container">
-        {listOfRestaurants?.map((data) => {
+        {filteredRestaurants?.map((data) => {
           return <RestaurantCard resData={data} key={data.info.id} />;
         })}
       </div>
