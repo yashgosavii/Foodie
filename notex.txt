@@ -430,3 +430,53 @@ $ Note : Conditional Rendering
 
 
 $ NOTE : Whenever state variable update, react triggers a reconciliation Cycle (re-rendering component)
+
+--------------------------------------------------------------------------------------
+
+EP-7 : Finding the path 
+-------------------------
+
+$ Note : Best practices for using useState()
+- Always create state variable inside the body of functional component
+- Put the hooks at the top, exactly below the component name
+- Never create state varibles inside if-else or for-loop or function, it leads to inconsistency
+
+$ Note : 
+Case 1 > useEffect(()=>{console.log("useEffect called");}) 
+If no dependency array, useEffect will be called on every render (default)
+
+Case 2 > useEffect(()=>{console.log("useEffect called");}, [])
+If empty dependency array, useEffect is called on initial render and at once.
+
+Case 3 > useEffect(()=>{console.log("useEffect called");},[dependencyD])
+If dependency array is with dependencyD, useEffect is called everytime dependencyD is updated
+
+## Routing 
+- Routing in React is typically handled using the React Router library. React Router enables navigation between views of various components in a React application, allows changing the browser URL, and keeps the UI in sync with the URL.
+
+- Steps to add React Router 
+1> npm install react-router-dom
+2> import { createBrowserRouter, RouterProvider } from "react-router";
+3> create a appRouter
+const appRouter = createBrowserRouter([
+  {
+    path: "/",
+    element : <App />
+  },
+  {
+    path : "/about",
+    element : <About />
+  },
+  {
+    path : "/contact",
+    element : <Contact />
+  }
+]);
+4> Provide the appRouter to RouterProvider
+root.render(<RouterProvider router={appRouter} />);
+
+
+$ Note : createBrowserRouter is recommended approach to create routes for projects
+
+# useRouteError() - Accesses the error thrown during an action, loader, or component render to be used in a route module Error Boundary.
+
