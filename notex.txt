@@ -1,11 +1,8 @@
 EP-1 : Inception
 -----------------
-
-
 # CDN - Content Delivery Network
 
 # CORS - Cross Origin Resource Sharing
-
 
 <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
 <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
@@ -479,4 +476,29 @@ root.render(<RouterProvider router={appRouter} />);
 $ Note : createBrowserRouter is recommended approach to create routes for projects
 
 # useRouteError() - Accesses the error thrown during an action, loader, or component render to be used in a route module Error Boundary.
+
+# <Outlet/> : Renders the matching child route of a parent route or nothing if no child route matches. [It get replaced with children according the path navigated]
+
+$ Note : Why not to use <a> to navigate in react
+- The <a> tag is not commonly used for navigation within the application because it performs a full page reload by default. This behavior contradicts React's core principle of building single-page applications (SPAs), where navigation should happen without reloading the entire page.
+
+## <Link> 
+- We can use <Link> component provided by routing libraries like React Router for navigation. It prevents the default reload behavior of the <a> tag and works seamlessly with React's virtual DOM.
+- <Link to="/path"> PATH </Link>
+
+
+## Client Side Routing 
+- Client-side routing is used in single-page applications (SPAs) where navigation is managed on the browser side without requiring a full page reload.
+
+## Server Side Routing
+- Server-side routing is the traditional approach used in multi-page applications (MPAs) where the server handles navigation by sending a new HTML file for each route.
+
+# Dynamic routing
+
+{
+  path : "/restaurant/:resId",
+  element : <RestaurantMenu />
+}
+
+$ Note : <Link> is represented to <a> in DOM.
 

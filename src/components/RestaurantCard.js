@@ -1,10 +1,11 @@
 import { RestaurantIMG_URL } from "../utils/constants";
 const RestaurantCard = (prop) => {  
-    const {name, cuisines, avgRating, costForTwo, cloudinaryImageId} = prop.resData?.info;
+    const {name, cuisines, avgRating, costForTwo, cloudinaryImageId,id} = prop.resData?.info;
     const slaString = prop.resData?.info.sla.slaString;
     
     return (
       <div className="res-card">
+        <p>Restaurant Id : {id}</p>
         <img className="res-image" src={RestaurantIMG_URL+cloudinaryImageId} alt="restaurant-image"/>
         <h3>{name}</h3>
         <p>{cuisines.join(', ')}</p>
