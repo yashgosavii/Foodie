@@ -680,5 +680,11 @@ render() {
 
 ---------------------------------------------------------------------------------------------------------------------
 
+EP-9 : Optimizing our App 
+--------------------------
 
+# Custom Hooks
 
+- useFetchRestMenu() hook
+useFetchRestMenu takes a restaurant id as an argument and returns the menu data for that restaurant. 
+This hook will be used in the Restaurant component to fetch the menu data for the selected restaurant.
