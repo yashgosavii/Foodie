@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { API_URL } from "../utils/constants";
 import Shimmer from "./Shimmer";
 import {Link} from "react-router";
+import useOnlineStatus from "../utils/useOnlineStatus";
 const Body = () => {
   // listOfRestaurants - original list of restaurants fetched from API
   const [listOfRestaurants, setListOfRestaurant] = useState([]);
@@ -19,7 +20,7 @@ const Body = () => {
   // fetch restaurants from API
   const fetchRestaurants = async () => {
     const response = await fetch(API_URL);
-    const data = await response.json();
+    const data = await response.json();    
     // set the original list of restaurants and filtered list of restaurants
     setListOfRestaurant(data?.data?.cards[4].card?.card?.gridElements?.infoWithStyle?.restaurants);
     setFilteredRestaurants(data?.data?.cards[4].card?.card?.gridElements?.infoWithStyle?.restaurants);
@@ -48,6 +49,17 @@ const Body = () => {
     setFilteredRestaurants(listOfRestaurants);
     setSearchText("");
   };
+
+  const getOnlineStatus = useOnlineStatus();
+
+  if (getOnlineStatus === false) {
+    return (
+      <div className="offline">
+        <p>You are offline</p>
+      </div>
+    );
+  }
+  
 
   // Shimmer Effect until data is fetched (conditional rendering) and then render the data
   return listOfRestaurants.length === 0 ? <Shimmer/> : (
