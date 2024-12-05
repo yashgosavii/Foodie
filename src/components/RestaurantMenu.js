@@ -14,6 +14,7 @@ const RestaurantMenu = ()=>{
         const data = await response.json();
         setResInfo(data.data);
     }
+    
     return resInfo===null ? <Shimmer/> : (
         <div className="menu">
             <MenuCard data={resInfo}/>

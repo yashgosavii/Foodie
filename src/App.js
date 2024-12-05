@@ -4,6 +4,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Body from "./components/Body";
 import About from "./components/About";
+import AboutClass from "./components/AboutClass";
 import Contact from "./components/Contact";
 import Error from "./components/Error";
 import Cart from "./components/Cart";
@@ -31,7 +32,7 @@ const appRouter = createBrowserRouter([
       },
       {
         path : "/about",
-        element : <About />,
+        element : <AboutClass />,
       },
       {
         path : "/contact",

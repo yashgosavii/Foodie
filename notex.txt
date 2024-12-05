@@ -502,3 +502,183 @@ $ Note : Why not to use <a> to navigate in react
 
 $ Note : <Link> is represented to <a> in DOM.
 
+--------------------------------------------------------------------------------------
+
+EP-8 : Lets Get Classy 
+-------------------------
+## Class Based Components (Interview - legacy code)
+
+Syntax : 
+
+import React from "react";
+class compName extends React.Component {
+  render() {
+    return (
+      // JSX
+    )
+  }
+}
+export default compName;
+
+Usage : 
+import compName from "path/to/compName";
+<compName/>
+
+NOTE : ClassBased Component is a JavaScript class that extends React.Component which uses render method and returns JSX.
+
+# Passing props to class based component
+
+<compName name="yash" location="india"/>
+
+# Receiving props and accessing them
+- A single object of provided props is passed to the constructer and super method.
+
+class compName extends React.Component  {
+  constructor (props){
+    super (props);
+  }
+
+  render () {
+    const {name , location} = this.props;
+    return (
+      {name} - {location}
+    )
+  }
+}
+
+## local state variables in class based component
+
+- we create state varible inside constructer using this.state = {}
+
+constructer(props) {
+  super(props);
+
+  this.state = {
+    count = 0,
+    count2 = 1;
+  }
+}
+
+- accessing state variable
+
+const {count, count2} = this.state;
+
+Note : We can creating as many as state variable we want inside this.state{} as 
+
+- this.state{
+  sv1 : defaultValue,
+  sv2 : defaultValue
+}
+
+- It acts same like for the functional component state variable, a big object in backend is created for various state varibles.
+
+- Updating State : this.setState({// update state})
+
+this.state =  {
+  count = 0,
+  count1 = 1,
+  count2 = 2
+}
+
+<button onClick={()=> this.setState({count : this.state.count + 1, count1 : this.state.count1 + 1})}>Increase Count</button>
+
+Note : this.setState() updates the state variable which we wish to and it does not touch any other state variable of this.state().
+
+
+## lifecycle of React Class Based Component
+
+1> constructor() : The constructor() method is called before anything else, when the component is initiated, and it is the natural place to set up the initial state and other initial values.
+
+2> The render() method is 'required', and is the method that actually outputs the HTML to the DOM.
+
+3>  The componentDidMount() method is called after the component is rendered.This is where you run statements that requires that the component is already placed in the DOM.
+
+- How class based component is mounted on webpage ?
+Case 1 : When child is class based component
+
+- child constructer
+- child render
+
+Case 2 : When both child and parent are class based component
+
+- parent constructer
+- parent render
+- child constructer
+- child render
+
+case 3 : when both parent and child are class component and componentDidMount() called in both parent and child.
+
+- parent constructer
+- parent render
+- child constructer
+- child render
+- child did mount
+- parent did mount
+
+case 4: when parent and multiple child are class component and componentDidMount().
+
+- parent constructer
+- parent render
+- children1 constructer
+- children1 render
+- children2 constructer
+- children2 render
+- children1 did mount
+- children2 did mount
+- parent did mount 
+
+Note : Both children's render is batched to manipulate the dom at one go making react fast.
+
+
+@lifecycle : 
+
+Render Phase: [constructor initiated and render]
+- Calculates necessary changes based on updated props or state. 
+- Creates a virtual DOM representation of the UI. 
+- This phase is purely computational and doesn't directly manipulate the DOM. 
+
+Commit Phase: [componentDidMount]
+- Applies the changes from the virtual DOM to the real DOM. 
+- Includes operations like updating DOM nodes, adding or removing elements, and calculating layout information. 
+- This is where the UI visually updates on the screen. 
+
+
+
+# Making API call : 
+componentDidMount is used to make API call [acts as useEffect hook] and is executed after the completion of parent component mounting.
+We generally prefer to render the component first and then make API call for better UX.
+constructor(props) {
+  super(props);
+  this.state {
+    userInfo : {
+      avatar_url : dummy_url,
+      name : dummy_name,
+      location : dummy_location,
+      contact : dummy_contact
+    }
+  }
+}
+
+async componentDidMount() {
+  const data = await fetch(url);
+  const response = await data.json();
+  this.setState({
+    userInfo : response
+  })
+}
+render() {
+  const {avatar_url, name, location, contact} = this.state.userInfo;
+}
+
+// Update
+# componentDidUpdate() {
+}
+// Unmount 
+# componentWillUnmount() {
+
+}
+
+---------------------------------------------------------------------------------------------------------------------
+
+
+
