@@ -711,3 +711,46 @@ const Grocery = lazy(()=> import("/path/to/grocery"));
 }
 
 - fallback = {// put what will be seen until loading the <Grocery/>}
+
+---------------------------------------------------------------------------------------------------------------------
+
+EP-10 : Jo Dikhta hai, vo biktha hai 
+------------------------------------
+
+# Styling our App
+- External CSS (index.css)
+- SASS CSS
+- Styled Components 
+- Material UI, Bootstrap, Charka UI, Ant Design
+- Tailwind CSS [We use this in our app]
+
+
+# Tailwind CSS
+Installation : 
+Step 1> npm install -D tailwindcss postcss
+        npx tailwindcss init
+Step 2> .postcssrc file creation 
+        { "plugins": {
+          "tailwindcss": {}
+          }
+        }
+
+Step 3> tailwind.config.js
+
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    "./src/**/*.{html,js,ts,jsx,tsx}",
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+}
+
+Step 4> index.css file creation
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
