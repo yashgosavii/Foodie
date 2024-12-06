@@ -4,6 +4,7 @@ import { Link } from "react-router";
 import useOnlineStatus from "../utils/useOnlineStatus";
 const Header = () => {
   const [btnNameReact, setBtnNameReact] = useState("LOGIN");
+  
   const getOnlineStatus = useOnlineStatus();
 
     return (
@@ -15,6 +16,7 @@ const Header = () => {
           <ul >
             <li>{(getOnlineStatus === true) ? '✅' : '⛔'}</li>
             <li><Link to="/">HOME</Link></li>
+            <li><Link to="/grocery">GROCERY</Link></li>
             <li><Link to="/about">ABOUT</Link></li>
             <li><Link to="/contact">CONTACT</Link></li>
             <li><Link to="/cart">CART</Link></li>

@@ -49,7 +49,7 @@ const Body = () => {
     setFilteredRestaurants(listOfRestaurants);
     setSearchText("");
   };
-
+   
   const getOnlineStatus = useOnlineStatus();
 
   if (getOnlineStatus === false) {

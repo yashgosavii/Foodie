@@ -684,7 +684,30 @@ EP-9 : Optimizing our App
 --------------------------
 
 # Custom Hooks
+// It is not necessary to start the hook with useHookName but it is advised to avoid linting issue.
 
 - useFetchRestMenu() hook
 useFetchRestMenu takes a restaurant id as an argument and returns the menu data for that restaurant. 
 This hook will be used in the Restaurant component to fetch the menu data for the selected restaurant.
+
+- useOnlineStatus() hook
+useOnlineStatus hook is used to check if online, if not show offline message.
+
+# Optimizing our App : 
+- Chunking / Code Splitting / Dynamic Bundling / Lazy Loading / On Demand Loading / dynamic import - Break your app in parts and bundle each part.
+
+- Imagine we have a Grocery Store in the app and it contains various component. We need to seperately bundle the grocery component.
+
+- we will load our grocery file when we navigate into the grocery section using lazy loading
+
+import {lazy , Suspense } from "react";
+
+const Grocery = lazy(()=> import("/path/to/grocery"));
+
+
+{
+  path : "/grocrey"
+  element : <Suspense fallback={<Shimmer/>}><Grocery/></Suspense>
+}
+
+- fallback = {// put what will be seen until loading the <Grocery/>}
