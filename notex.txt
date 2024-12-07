@@ -753,4 +753,9 @@ Step 4> index.css file creation
 @tailwind components;
 @tailwind utilities;
 
+Step 5> Usage : 
+<div className="flex flex-wrap items-center p-4 m-4">
+  
+</div>
+
 
