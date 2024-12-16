@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from "react"
+import { lazy, Suspense, useState, useEffect, useContext } from "react"
 import ReactDOM from "react-dom/client"
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -12,17 +12,34 @@ import RestaurantMenu from "./components/RestaurantMenu";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router";
 import Shimmer from "./components/Shimmer";
 // import Grocery from "./components/Grocery";
+import UserContext from "./utils/UserContext";
 
 
 const Grocery = lazy(() => import("./components/Grocery"));
 const About = lazy(() => import("./components/AboutClass")); 
+
 const AppLayout = () => {
+
+  const {loggedInUser} = useContext(UserContext);
+  const [userName, setUserName] = useState(loggedInUser);
+
+  // authentication logic
+
+  useEffect(() => {
+    const data = {
+      name: "John Doe",
+    }
+    setUserName(data.name);
+  }, [])
+
   return (
+    <UserContext.Provider value={{loggedInUser : userName, setUserName}}>
     <div className="app">
       <Header />
       <Outlet />
       <Footer />
     </div>
+    </UserContext.Provider>
   )
 }
 

@@ -1,9 +1,10 @@
-import RestaurantCard from "./RestaurantCard";
-import { useState, useEffect } from "react";
+import RestaurantCard, { RestaurantWithDiscount } from "./RestaurantCard";
+import { useState, useEffect, useContext } from "react";
 import { API_URL } from "../utils/constants";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import UserContext from "../utils/UserContext";
 const Body = () => {
   // listOfRestaurants - original list of restaurants fetched from API
   const [listOfRestaurants, setListOfRestaurant] = useState([]);
@@ -12,6 +13,9 @@ const Body = () => {
   // searchText - search text entered by user
   const [searchText, setSearchText] = useState("");
 
+  const {loggedInUser, setUserName} = useContext(UserContext);
+
+  const DiscountedRestaurants = RestaurantWithDiscount(RestaurantCard);
   // Body will render first and then useEffect will run
   useEffect(() => {
     fetchRestaurants();
@@ -87,13 +91,18 @@ const Body = () => {
     );
   }
 
+  if(listOfRestaurants?.length === 0) {
+    return (
+      <div className="body">
+        <Shimmer />
+      </div>
+    );
+  }
   // Shimmer Effect until data is fetched (conditional rendering) and then render the data
-  return listOfRestaurants.length === 0 ? (
-    <Shimmer />
-  ) : (
+  return (
     <div className="body">
       {/* Search */}
-      <div className="search-filter flex space-x-2 bg-green-100 items-center justify-center">
+      <div className="search-filter flex space-x-2 items-center justify-center">
       <div className="search m-4 p-4">
         <input type="text" className="border border-solid border-black" value={searchText} placeholder="Search for restaurants"
           onChange={(e) => {
@@ -102,7 +111,6 @@ const Body = () => {
         />
         <button className="px-4 py-2 bg-green-300 m-4 rounded-2xl" onClick={search}> Search </button>
       </div>
-
       <div className="filter m-4 p-4">
         {/* Filter - Top Rated Restaurant */}
         <button
@@ -127,14 +135,20 @@ const Body = () => {
       >
         Toggle {theme === 'light' ? 'Dark' : 'Light'} Mode
       </button>
+      <div>
+        <label className="m-4">username : </label>
+          <input type="text" className="border p-2 border-black" value={loggedInUser} onChange={(e)=> setUserName(e.target.value)}/>
+      </div>    
       </div>
       </div>
       {/* Restaurants */}
-      <div className="res-container flex flex-wrap">
+      <div className="res-container flex flex-wrap mx-4">
         {filteredRestaurants?.map((data) => {
           return (
             <Link key={data.info.id} to={"/restaurant/" + data.info.id}>
-              <RestaurantCard resData={data} />{" "}
+              {
+                data.info.aggregatedDiscountInfoV3 !== null ? <DiscountedRestaurants resData={data} /> : <RestaurantCard resData={data} />
+              }
             </Link>
           );
         })}

@@ -1,5 +1,6 @@
 import React from "react";
 import UserClass from "./UserClass";
+
 class AboutClass extends React.Component {
   constructor(props) {
     super(props);
@@ -27,6 +28,7 @@ class AboutClass extends React.Component {
               /> */}
         {/* class based component */}
         <div className="team">
+
           <UserClass
             name="User"
             location="Location"

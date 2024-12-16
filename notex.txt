@@ -758,4 +758,148 @@ Step 5> Usage :
   
 </div>
 
+-----------------------------------------------------------------------------------------------------
+EP-11 : Data is the new oil 
+-----------------------------
+
+# Higher order components - Function which takes a component as argument and return a component.
+- Enhances exisiting component and return the enhanced component.
+
+## Promoted Restaurant Feature / Aggregated Discount Label 
+
+- 10% off upto Rs.40
+
+export const RestaurantWithDiscount = (RestaurantCard) => {
+  return (props) => {
+    const data = prop?.resData?.info?.aggregatedDiscountInfoV3;
+    return (
+      <label>{data.header+" "+data.subHeader}</label>
+      <RestaurantCard {...props}/>
+    )
+  }
+}
+
+
+Usage :
+const DiscountedRestaurants = RestaurantWithDiscount(RestaurantCard);
+
+<Link key={data.info.id} to={"/restaurant/" + data.info.id}>{
+  data.info.aggregatedDiscountInfoV3 !== null ? <DiscountedRestaurants resData={data} /> : <RestaurantCard resData={data} />
+}
+</Link>
+
+# HOF are pure functions, We use them to enhance the existing component and not modify them
+
+## How we manage data in our app ? 
+
+## In menu of each restaurant, we will try to get data of all the itemCategory sections using filter method
+
+## Controlled and Uncontrolled components
+Controlled components in React are the components whose state and behaviors are managed by React components using states while the uncontrolled components manage their own state and control their behaviors with the help of DOM.
+
+
+- RestaurantMenuCategory will control the RestaurantMenu component to apply feature of collapsable accordian [if one expand all other should collapse]; We pass the control from the parent to child ans child will not have any own state.
+
+# Lifting the state up
+Sharing State Between Components
+Sometimes, you want the state of two components to always change together. To do it, remove state from both of them, move it to their closest common parent, and then pass it down to them via props. This is known as lifting state up, and it’s one of the most common things you will do writing React code.
+
+
+# Prop Drilling issue
+Prop drilling is basically a situation when the same data is being sent at almost every level due to requirements in the final level.
+
+- Problem 
+Suppose we create a dummy in RestaurantMenu
+const dummy = "dummy data"; 
+we want to pass this to MenuItems
+we need to pass this to RestaurantMenuCategory, then It need to pass to MenuItems from category and so on we will recieve ans we can use it.
+The problem with Prop Drilling is that whenever data from the Parent component will be needed, it would have to come from each level, Regardless of the fact that it is not needed there and simply needed in last. Prop drilling can complicate your component structure.
+
+- Solution 
+A better alternative to this is using useContext hook. The useContext hook is based on Context API and works on the mechanism of Provider and Consumer. Provider needs to wrap components inside Provider Components in which data have to be consumed. Then in those components, using the useContext hook that data needs to be consumed.
+
+
+# React Context / Context API 
+- context 
+A global store where data is kept which we can access wherever required.
+
+e.g : loggedIn user info, user status, theme 
+
+
+## Creating a context 
+- UserContext
+
+import {createContext} from "react";
+const UserContext = createContext({
+  loggedInUser : "default user"
+});
+export default UserContext;
+
+## Accessing the context 
+
+- we can access the context using hook : "useContext"
+
+const data = useContext(UserContext);
+console.log(data.loggedInUser);
+
+# Suppose we need to access it inside a class based component
+
+<UserContext.consumer>
+  {(data) => <h1>{data.loggedInUser}</h1>}
+</UserContext.consumer>
+
+## Updating the context value
+
+const [userName, setUserName] = useState("Default User");
+
+  // authentication logic
+  useEffect(() => {
+    const data = {
+      name: "John Doe",
+    }
+    setUserName(data.name);
+  }, [])
+
+  return (
+    <UserContext.Provider value={{loggedInUser : userName}}>
+    <div className="app">
+      // userName
+      <UserContext.Provider value={{loggedInUser : "HeaderUser"}}>
+        // HeaderUser
+        <Header />
+      </UserContext.Provider>    
+      <Outlet />
+      <Footer />
+    </div>
+    </UserContext.Provider>
+  )
+
+# we can use multiple context.Provider wherever required
+
+# Updating 
+
+const {loggedInUser, setUserName} = useContext(UserContext);
+      
+<div>
+  <label className="m-4">username : </label>
+    <input type="text" className="border p-2 border-black" value={loggedInUser} onChange={(e)=> setUserName(e.target.value)}/>
+</div> 
+
+-----------------------------------------------------------------------------------------------------
+EP-12 : Let's Build our store  
+------------------------------
+Akshay's View on Redux : 
+1> Using Redux is not mandatory for small project one can use CONTEXT API. Use Redux for complex projects
+2> Redux is different library and not same as react, it is used for state management.
+3> Zustand, Recoil can also be used for state management. 
+4> Redux Dev Tools can helps us for better debugging.
+
+# REDUX - State Management Library [It works in Data layer]
+Installation : npm install @reduxjs/toolkit
+
+
+
+
+
+
 
