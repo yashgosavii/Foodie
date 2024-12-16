@@ -897,9 +897,29 @@ Akshay's View on Redux :
 # REDUX - State Management Library [It works in Data layer]
 Installation : npm install @reduxjs/toolkit
 
+## Building Add to Cart functionality and cart page 
 
+AIM : if we click on add to card button of menu item, the item should be added to cart page and no. of items added should be displayed in the cart in header.
 
+REDUX STORE : Big object which is kept in a global central space where most of the important data which is required at different places is kept.
+- We create slices for better management
 
+- Redux Slices : small logical portions of redux store.
+[UserSlice - user info, login]
+[CartSlice - cart info]
+[UISlice - Theme, Icons info]
 
+- We cannot directly update the slice on the [add to cart] button click, we need to dispatch the action to call a function to modify the cart 
 
+$$ Important : 
+
+- writing data
+### Add to cart Button [Clicked] => DISPATCH ACTION [Function Called [REDUCER]] => Modified the cart [CartSlice]
+
+- reading data 
+
+### CartSlice => SELECTOR[subscribing to the store] => Cart of Header
+- We use selector to read data from store and show it where it is required
+
+# Header (Cart) is subscribed to the (CartSlice) store; SYNCED with the help of selector.
 
