@@ -1,5 +1,17 @@
 import { DISH_IMG_URL } from "../utils/constants";
+import { useDispatch } from "react-redux";
+import { addItem } from "../store/cartSlice";
 const MenuItems = ({ items }) => {
+
+  const dispatch = useDispatch();
+
+  const handleAddItem = (item) => {
+    // dispatching action to addItem to cart
+    // dispatch(addItem(data))
+    // { payload : "data"};
+    dispatch(addItem(item));
+  }
+
   return (
     <div>
   {items.map((item) => (
@@ -17,7 +29,7 @@ const MenuItems = ({ items }) => {
       </div>
       <div className="w-2/12 m-2">
       <div className="absolute">
-        <button className="bg-green-400 text-white rounded-md">Add to Cart</button>
+        <button className="bg-green-400 text-white rounded-md" onClick={() => handleAddItem(item)} >Add to Cart</button>
       </div>
         <img
           src={DISH_IMG_URL + item.card.info.imageId}

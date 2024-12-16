@@ -1,12 +1,18 @@
 import { Logo_URL } from "../utils/constants";
-import { useState, useContext } from "react";
+import { useState, useContext} from "react";
 import { Link } from "react-router";
 import useOnlineStatus from "../utils/useOnlineStatus";
 import UserContext from "../utils/UserContext";
+import { useSelector } from "react-redux";
 const Header = () => {
   const [btnNameReact, setBtnNameReact] = useState("LOGIN");
   const getOnlineStatus = useOnlineStatus();
   const user = useContext(UserContext);
+
+  // subscribing to the store to get the cart items
+  const cartItems = useSelector((store) => store.cart.items);
+  console.log(cartItems);
+  
 
     return (
       <div className="flex justify-between items-center bg-pink-100 shadow-md px-6 py-2 ">
@@ -29,7 +35,7 @@ const Header = () => {
         <Link to="/contact">CONTACT</Link>
       </li>
       <li className="text-md font-medium ">
-        <Link to="/cart">CART</Link>
+        <Link to="/cart">CART ({cartItems.length} Items) </Link>
       </li>
       <button
         className="px-3 py-1 bg-pink-500 text-white rounded-lg font-semibold text-sm"

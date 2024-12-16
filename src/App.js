@@ -13,6 +13,8 @@ import { createBrowserRouter, RouterProvider, Outlet } from "react-router";
 import Shimmer from "./components/Shimmer";
 // import Grocery from "./components/Grocery";
 import UserContext from "./utils/UserContext";
+import { Provider } from "react-redux";
+import appStore from "./store/appStore";
 
 
 const Grocery = lazy(() => import("./components/Grocery"));
@@ -33,13 +35,15 @@ const AppLayout = () => {
   }, [])
 
   return (
-    <UserContext.Provider value={{loggedInUser : userName, setUserName}}>
-    <div className="app">
-      <Header />
-      <Outlet />
-      <Footer />
-    </div>
-    </UserContext.Provider>
+    <Provider store={appStore}>
+      <UserContext.Provider value={{loggedInUser : userName, setUserName}}>
+        <div className="app">
+          <Header />
+          <Outlet />
+          <Footer />
+        </div>
+      </UserContext.Provider>
+    </Provider>
   )
 }
 

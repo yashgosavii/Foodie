@@ -923,3 +923,133 @@ $$ Important :
 
 # Header (Cart) is subscribed to the (CartSlice) store; SYNCED with the help of selector.
 
+--------------------------------------------------
+
+# Install Redux Toolkit and React-Redux 
+ - npm install @reduxjs/toolkit
+ - npm install react-redux 
+# Build store 
+ - store > appStore.js
+
+  import { configureStore } from "@reduxjs/toolkit"
+  const appStore = configureStore();
+
+  export default appStore;
+# connect store to app 
+ - App.js
+
+  import { Provider } from "react-redux";
+  import appStore from "./store/appStore";
+
+  return (
+    <Provider store={appStore}>
+      <div className="app">
+      </div>
+    </Provider>  
+  )
+# create cartSlice 
+# write data using dispatch action
+ - cartSlice.js
+  
+  import {createSlice} from "@reduxjs/toolkit";
+
+  const cartSlice = createSlice({
+    name : "cart",
+    initialState : {
+      items : []
+    },
+    reducers : {
+      addItem : (state, action) => {
+        state.items.push(action.payload);
+      },
+      removeItem : (state) => {
+        state.items.pop();
+      },
+      clearCart : (state) => {
+        state.items.length = 0;
+      }
+    }
+  });
+
+  export const {addItem, removeItem, clearCart} = cartSlice.actions;
+
+  export default cartSlice.reducer;
+  
+# Putting slices to appStore
+
+  import { configureStore } from "@reduxjs/toolkit";
+  import cartReducer from "../store/cartSlice";
+  const appStore = configureStore({
+    reducer : {
+      cart : cartReducer
+    }
+  });
+
+  export default appStore;
+
+# read data using selector
+  - we use "useSelector" hook 
+
+  import {useSelector} from "react-redux";
+
+  const cartItems = useSelector((store)=>store.cart.items);
+  <MenuItems items={cartItems} />
+
+# Dispatching Actions
+  - we use "useDispatch" hook
+
+  import {useDispatch} from "react-redux";
+
+  const dispatch = useDispatch();
+  const handleClearCart = () => {
+    dispatch(clearCart());
+  }
+
+
+
+$$ Important (Find difference): 
+
+onClick={handleAddItem}
+onClick={handleAddItem(item)}
+onClick={() => handleAddItem(item)}
+
+
+# More About Redux : 
+1> Always try to select correct portion of the store to optimize the performance
+  [Use this]
+  const cartItems = useSelector((store) => store.cart.items);
+
+  [Don't use this, No need of complete store, we are only targeting cart in cart.js]
+  const store = useSelector((store) => store);
+  const cartItems = store.cart.items;
+
+2> In case of appStore, use reducer but in case of slice, use reducers 
+
+3> we write reducers in slice but export it as "export default sliceName.reducer" and for "export const {act1, act2} = sliceName.actions;
+
+4> Older Redux ( Don't Mutate State; Returing mandatory ) 
+
+  [This was used to avoid state mutation]
+  addItem = (state,action) => {
+    const newState = [...state];
+    newState.items.push(action.payload);
+    return newState;
+  }
+
+  Redux Toolkit (You Need to Mutate State)
+
+  [This was not supported, We use this in react-redux (latest) where state mutation is supported] 
+  addItem = (state,action) => {
+    state.items.push(action.payload)
+  }
+
+5> Behind the scenes, redux is still keeping the state immutable, following older logic using "immer library".
+
+6> Immer : Immer is a library that simplifies the process of writing immutable update logic. Immer provides a function called produce , which accepts two arguments: your original state , and a callback function.
+
+7> use current(state) to find the current state.
+
+8> use Redux for complex projects and Redux Dev Tools for better debugging
+
+9> RTK query (LEARN) - data fetching 
+
