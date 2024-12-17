@@ -1067,6 +1067,7 @@ EP-13 : Time for the test
     - Integration Testing : We test integration of components 
     - End To End (E2E) Testing : Testing application from "userLands" to "userTakesOff" [Cypress, Selenium]
 
+# SETUP
 - Setting up for writing test cases 
   - testing libraries
   1> React Testing Library : React Testing Library is a very light-weight solution (built on top of dom testing library) for testing React components. It provides light utility functions on top of react-dom and react-dom/test-utils, in a way that encourages better testing practices. It uses Jest in background.
@@ -1076,7 +1077,9 @@ EP-13 : Time for the test
   Installation : npm install -D jest 
                  npm install -D babel-jest @babel/core @babel/preset-env
     - Configuring 'babel.config.js'
-      export const presets = [['@babel/preset-env', { targets: { node: 'current' } }]]; 
+      module.exports = {
+        presets: [['@babel/preset-env', {targets: {node: 'current'}}]],
+      }; 
 
     - configuring '.parcelrc', disabling default babel transplition
       { "extends": "@parcel/config-default",
@@ -1101,9 +1104,25 @@ EP-13 : Time for the test
     [JSDOM is a library which parses and interacts with assembled HTML just like a browser]
       - npm i -D jest-environment-jsdom
 
+# Writing Test Cases 
+- Write test case in file or folder as below : 
+  - __tests__/fileName(.js/.ts); [Dunder Tests]
+  - fileName.(test/spec).(js/ts);
 
 
+- Testing Js code : 
+  - sum.js 
+    export const sum = (a, b) => {
+      return a + b;
+    }; 
 
-
+  - __tests__/sum.test.js
+  import sum from "path/to/file"
+  // test("descriptionOfTest", function)
+  test("sum function should calculate the sum of two numbers", ()=>{
+    const result = sum(2,4);
+    // assertion
+    expect(result).toBe(6); // passed, if toBe(7) - failed
+  })
 
 
