@@ -1053,3 +1053,57 @@ onClick={() => handleAddItem(item)}
 
 9> RTK query (LEARN) - data fetching 
 
+
+-----------------------------------------------------------------------------------------------------
+EP-13 : Time for the test  
+----------------------------
+- Why do we need to write test case?
+  - changing one line of the code can make the app to break or have bug; To avoid this, we test the app at phases and parts. [testing is also a job of developer : unit & integration]
+
+- Types of testing (developer)
+  1> Manual Testing - Testing whatever developer has develop [is the built is working]
+  2> Writing test cases to test our app automatically
+    - Unit Testing : We test a component in isolation
+    - Integration Testing : We test integration of components 
+    - End To End (E2E) Testing : Testing application from "userLands" to "userTakesOff" [Cypress, Selenium]
+
+- Setting up for writing test cases 
+  - testing libraries
+  1> React Testing Library : React Testing Library is a very light-weight solution (built on top of dom testing library) for testing React components. It provides light utility functions on top of react-dom and react-dom/test-utils, in a way that encourages better testing practices. It uses Jest in background.
+  Installation : npm install -D @testing-library/react @testing-library/dom
+
+  2> Jest with babel - JavaScript Testing Framework, It uses babel in background.
+  Installation : npm install -D jest 
+                 npm install -D babel-jest @babel/core @babel/preset-env
+    - Configuring 'babel.config.js'
+      export const presets = [['@babel/preset-env', { targets: { node: 'current' } }]]; 
+
+    - configuring '.parcelrc', disabling default babel transplition
+      { "extends": "@parcel/config-default",
+        "transformers": {
+          "*.{js,mjs,jsx,cjs,ts,tsx}": [
+          "@parcel/transformer-js",
+          "@parcel/transformer-react-refresh-wrap"
+          ]}
+      }
+
+    - npm run jest : checks the test cases of application
+    - configuring jest 
+      - npx jest --init 
+        - typescript : n
+        - environment : jsdom (browser-like)
+        - coverageReport : y 
+        - provider : babel 
+        - clearMockCalls : y
+      - jest.config.js will be created.
+
+    - Install JsDOM library 
+    [JSDOM is a library which parses and interacts with assembled HTML just like a browser]
+      - npm i -D jest-environment-jsdom
+
+
+
+
+
+
+

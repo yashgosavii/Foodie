@@ -1,6 +1,7 @@
 import { DISH_IMG_URL } from "../utils/constants";
 import { useDispatch } from "react-redux";
 import { addItem } from "../store/cartSlice";
+import { ToastContainer, toast } from "react-toastify";
 const MenuItems = ({ items }) => {
 
   const dispatch = useDispatch();
@@ -9,6 +10,7 @@ const MenuItems = ({ items }) => {
     // dispatching action to addItem to cart
     // dispatch(addItem(data))
     // { payload : "data"};
+    toast.success("Item added to cart");
     dispatch(addItem(item));
   }
 
@@ -30,6 +32,7 @@ const MenuItems = ({ items }) => {
       <div className="w-2/12 m-2">
       <div className="absolute">
         <button className="bg-green-400 text-white rounded-md" onClick={() => handleAddItem(item)} >Add to Cart</button>
+        <ToastContainer />
       </div>
         <img
           src={DISH_IMG_URL + item.card.info.imageId}
