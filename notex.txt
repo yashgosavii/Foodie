@@ -1125,4 +1125,90 @@ EP-13 : Time for the test
     expect(result).toBe(6); // passed, if toBe(7) - failed
   })
 
+- Testing our react components [Unit Testing]
+  [To test JSX , we also need to install : npm i -D @babel/preset-react and include it inside babel.config.js; We will also need to work all jest-dom methods : npm i -D @testing-library/jest-dom ]
+ - checking if the contant component renders or not ?
+
+    import { render, screen } from "@testing-library/react";
+    import Contact from "../components/Contact";
+    import "@testing-library/jest-dom"
+
+    describe("contact component test cases",()=>{
+      test("renders contact component", () => {
+        render(<Contact />);
+        // querying
+        const heading = screen.getByRole("heading");
+        // assertion
+        expect(heading).toBeInTheDocument(); 
+      });
+
+      it("renders two inputs", () => {
+      render(<Contact />);
+      const inputBoxes = screen.getAllByRole("textbox");
+      expect(inputBoxes.length).toBe(2);
+      });
+    })
+    
+- describe is used to group the test cases 
+- we can query and assert test case using test() or it();
+
+  - Testing Header Component
+  [As we are using redux and router in the header, we will require them in the render]
+    
+    import Header from "../components/Header";
+    import { render, screen } from "@testing-library/react";
+    import "@testing-library/jest-dom";
+    import { Provider } from "react-redux";
+    import appStore from "../store/appStore";
+    import { BrowserRouter } from "react-router-dom";
+
+    describe("Header component test cases", () => {
+      test("renders the header component with login button", () => {
+        render(
+          <BrowserRouter>
+            <Provider store={appStore}>
+              <Header />
+            </Provider>
+          </BrowserRouter>
+        );
+
+        // const loginButton = screen.getByRole("button");
+        const loginButton = screen.getByText("LOGIN");
+        expect(loginButton).toBeInTheDocument();
+      });
+
+      test("renders the header component with cart items", () => {
+        render(
+          <BrowserRouter>
+            <Provider store={appStore}>
+              <Header />
+            </Provider>
+          </BrowserRouter>
+        );
+        const cartItems = screen.getByText(/CART/);
+        expect(cartItems).toBeInTheDocument();
+      });
+
+      test("renders the header component with login to logout on click event ", () => {
+        render(
+          <BrowserRouter>
+            <Provider store={appStore}>
+              <Header />
+            </Provider>
+          </BrowserRouter>
+        );
+        const loginButton = screen.getByRole("button", { name: "LOGIN" });
+
+        fireEvent.click(loginButton);
+
+        const logoutButton = screen.getByRole("button", { name: "LOGOUT" });
+
+        expect(logoutButton).toBeInTheDocument();
+      });
+    });
+
+- we can also use regex like getByText(/CART/)
+- fireEvent is used to test events
+
+
 
