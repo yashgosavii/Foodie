@@ -1210,5 +1210,31 @@ EP-13 : Time for the test
 - we can also use regex like getByText(/CART/)
 - fireEvent is used to test events
 
+  - Testing Restaurant Card Component [Props]
 
+    const MOCK_DATA = {
+      resData: {
+        info: {
+          name: "Test Restaurant",
+          cuisines: ["Italian", "Chinese"],
+          avgRating: "4.5",
+          costForTwo: 500,
+          cloudinaryImageId: "test-image-id",
+          sla: { slaString: "30 mins" },
+        },
+      },
+    };
+
+    test("renders restaurant card with name, cuisine and avgRating",()=>{
+      render(<RestaurantCard resData={MOCK_DATA});
+      const name = screen.getByText("Test Restaurant");
+      expect(name).toBeInTheDocument();
+      const cuisine = screen.getByText("Italian, Chinese");
+      expect(cuisine).toBeInTheDocument();
+      const avgRating = screen.getByText("4.5");
+      expect(avgRating).toBeInTheDocument();
+    })
+  
+
+  
 
