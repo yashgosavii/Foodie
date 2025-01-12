@@ -18,7 +18,7 @@ import appStore from "./store/appStore";
 
 
 const Grocery = lazy(() => import("./components/Grocery"));
-const About = lazy(() => import("./components/AboutClass")); 
+const About = lazy(() => import("./components/About")); 
 
 const AppLayout = () => {
 
